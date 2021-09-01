@@ -1,3 +1,9 @@
 <div class="content">
   <app-menu-bar></app-menu-bar>
+  <div *ngIf="leagues.length>0; else espera">
+    <app-table [dataTable]="leagues" [columnNameTable]="columNames" [title]="title" [showActions]="true"></app-table>
+  </div>
+  <ng-template #espera>Esperando datos...</ng-template>
 </div>
+<router-outlet></router-outlet>
+
