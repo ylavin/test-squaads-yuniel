@@ -12,7 +12,7 @@ export class LeagueListComponent implements OnInit {
   columNames: string[];
   title: string;
 
-  constructor(private leagueService: LeagueService) {
+  constructor(public leagueService: LeagueService) {
     this.leagues =[];
     this.columNames=['Logo', 'Nombre'];
     this.title = 'Ligas';

@@ -3,6 +3,10 @@ import {PrimeNGConfig} from "primeng/api";
 import {ConfirmationService} from 'primeng/api';
 import {MessageService} from 'primeng/api';
 import {Router} from "@angular/router";
+import {LeagueService} from "../../services/leagueService";
+import {TeamService} from "../../services/teamService";
+import {PlayerService} from "../../services/playerService";
+import {Team} from "../../models/team";
 
 @Component({
   selector: 'app-table',
@@ -17,6 +21,8 @@ export class TableComponent implements OnInit {
   selectedElements: any[];
   submitted: boolean;
   modalTitle: string;
+  teams: any[];
+  team: string;
 
   @Input() dataTable!: any[];
 
@@ -26,6 +32,9 @@ export class TableComponent implements OnInit {
 
   @Input() showActions!: boolean;
 
+  @Input() playerService!: PlayerService;
+  @Input() teamService!: TeamService;
+
   constructor(private primengConfig: PrimeNGConfig, private messageService: MessageService, private confirmationService: ConfirmationService, private router: Router) {
     this.elementDialog = false;
     this.elements = [];
@@ -33,12 +42,16 @@ export class TableComponent implements OnInit {
     this.selectedElements = [];
     this.submitted = false;
     this.modalTitle = ''
+    this.team = '';
+    this.teams = [];
   }
 
   ngOnInit(): void {
     this.elements = this.dataTable;
-    console.log(this.columnNameTable);
     this.primengConfig.ripple = true;
+    this.teamService.getAllTeams().subscribe(respose => {
+      this.teams = respose as Team[]
+    })
   }
 
   openNew() {
@@ -56,7 +69,7 @@ export class TableComponent implements OnInit {
       accept: () => {
         this.elements = this.elements.filter(val => !this.selectedElements.includes(val));
         this.selectedElements = [];
-        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Elemento eliminado', life: 3000});
+        this.messageService.add({severity: 'success', summary: '', detail: 'Elemento eliminado', life: 3000});
       }
     });
   }
@@ -75,7 +88,7 @@ export class TableComponent implements OnInit {
       accept: () => {
         this.elements = this.elements.filter(val => val.id !== element.id);
         this.element = {};
-        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Elemento eliminado', life: 3000});
+        this.messageService.add({severity: 'success', summary: '', detail: 'Elemento eliminado', life: 3000});
       }
     });
   }
@@ -103,7 +116,7 @@ export class TableComponent implements OnInit {
         this.elements.push(this.element);
         this.messageService.add({
           severity: 'success',
-          summary: 'Successful',
+          summary: '',
           detail: 'Elemento creado satisfactoriamente',
           life: 3000
         });
@@ -123,7 +136,6 @@ export class TableComponent implements OnInit {
         break;
       }
     }
-
     return index;
   }
 
@@ -139,4 +151,20 @@ export class TableComponent implements OnInit {
   viewDetails(element: any) {
     this.router.navigate(['/detail/' + element.id]);
   }
+
+  getTeamById(id: any) {
+    this.playerService.getTeamById(id).subscribe(response => {
+      return response
+    });
+  }
+
+  getTeamForSelect() {
+    let options: any[] = [];
+    this.teams.forEach(value => {
+      options.push({label: value.name, value: value.id})
+    });
+    return options;
+  }
 }
+
+

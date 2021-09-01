@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {PlayerService} from "../../../core/services/playerService";
+import {Player} from "../../../core/models/player";
+import {TeamService} from "../../../core/services/teamService";
 
 @Component({
   selector: 'app-player-list',
@@ -6,10 +9,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./player-list.component.scss']
 })
 export class PlayerListComponent implements OnInit {
+  players: Player[];
+  columNames: string[];
+  title: string;
 
-  constructor() { }
+  constructor(public playerService: PlayerService, public teamService: TeamService) {
+    this.players = [];
+    this.columNames = ['Avatar', 'Nombre', 'Equipo'];
+    this.title = 'Jugadores';
+  }
 
   ngOnInit(): void {
+    this.playerService.getAllPlayers().subscribe(response => {
+      this.players = response as Player[]
+    });
+
   }
 
 }

@@ -29,6 +29,8 @@ import {DialogModule} from 'primeng/dialog';
 import {ContextMenuModule} from 'primeng/contextmenu';
 import {AvatarModule} from 'primeng/avatar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {DropdownModule} from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -66,7 +68,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     DialogModule,
     ContextMenuModule,
     AvatarModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MultiSelectModule,
+    DropdownModule
   ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent],

@@ -40,6 +40,11 @@
                 <p-sortIcon field="name"></p-sortIcon>
               </th>
             </ng-container>
+            <!--            <ng-container *ngIf="col==='Equipo'">-->
+            <!--              <th pSortableColumn="teamId" [style]="{width: 100/columnNameTable.length+'px'}">{{col}}-->
+            <!--                <p-sortIcon field="teamId"></p-sortIcon>-->
+            <!--              </th>-->
+            <!--            </ng-container>-->
           </ng-container>
 
           <th [style]="{width: 100/columnNameTable.length+'px'}">Acciones</th>
@@ -53,41 +58,43 @@
           <ng-container *ngIf="columnNameTable[0] === 'Logo'">
             <td>
               <p-avatar [image]="element.logoUrl" styleClass="p-mr-2" shape="circle"
-                        [style]="{'border-color': '#9c27b0' }"></p-avatar>
+              ></p-avatar>
             </td>
           </ng-container>
           <ng-container *ngIf="columnNameTable[0] === 'Avatar'">
             <td>
-              <p-avatar image="element.avatarUrl" styleClass="p-mr-2" shape="circle"></p-avatar>
+              <p-avatar [image]="element.avatarUrl" styleClass="p-mr-2" shape="circle"
+              ></p-avatar>
             </td>
           </ng-container>
 
           <td>{{element.name}}</td>
-            <td>
-              <button pButton pRipple icon="pi pi-eye" class="p-button p-button-rounded p-button-secondary"
-                      (click)="viewDetails(element)"></button>
+          <!--          <td *ngIf="title==='Jugadores'">{{getTeamById(element.teamId)}}</td>-->
+          <td>
+            <button pButton pRipple icon="pi pi-eye" class="p-button p-button-rounded p-button-secondary"
+                    (click)="viewDetails(element)"></button>
 
-              <ng-container *ngIf="showActions===true">
+            <ng-container *ngIf="showActions===true">
 
               <button pButton pRipple icon="pi pi-pencil" class="p-button p-button-rounded p-button-success p-mr-2"
                       (click)="editElement(element)"></button>
 
               <button pButton pRipple icon="pi pi-trash" class="p-button p-button-rounded p-button-danger"
                       (click)="deleteElement(element)"></button>
-              </ng-container>
-            </td>
+            </ng-container>
+          </td>
         </tr>
       </ng-template>
       <ng-template pTemplate="summary">
         <div class="p-d-flex p-ai-center p-jc-between">
-          In total there are {{elements ? elements.length : 0 }} elements.
+          Total: {{elements ? elements.length : 0 }} elementos.
         </div>
       </ng-template>
     </p-table>
   </div>
 </div>
 
-<p-dialog [(visible)]="elementDialog" [style]="{width: '450px'}" header="{{modalTitle}}" [modal]="true"
+<p-dialog [(visible)]="elementDialog" [style]="{width: '450px', 'height': '600px'}" header="{{modalTitle}}" [modal]="true"
           styleClass="p-fluid">
   <ng-template pTemplate="content">
     <div class="p-field">
@@ -96,11 +103,25 @@
       <small class="p-error" *ngIf="submitted && !element.name">Nombre es requerido</small>
     </div>
 
-    <div class="p-field">
+    <div class="p-field" *ngIf="title==='Equipos'">
       <label for="logo">Url del logo*</label>
       <input type="text" pInputText id="logo" [(ngModel)]="element.logoUrl" required autofocus/>
       <small class="p-error" *ngIf="submitted && !element.logoUrl">Url del logo es requerido</small>
     </div>
+
+    <div class="p-field" *ngIf="title==='Jugadores'">
+      <label for="avatar">Url del logo*</label>
+      <input type="text" pInputText id="avatar" [(ngModel)]="element.avatarUrl" required autofocus/>
+      <small class="p-error" *ngIf="submitted && !element.avatarUrl">Url del avatar es requerido</small>
+    </div>
+
+    <div class="p-field" *ngIf="title==='Jugadores'">
+      <label for="avatar">Equipo*</label>
+      <p-dropdown [options]="getTeamForSelect()" [(ngModel)]="team" placeholder="Seleccione un equipo" [virtualScroll]="true" [itemSize]="31" [filter]="false"></p-dropdown>
+      <small class="p-error" *ngIf="submitted && !element.teamId">El equipo es requerido</small>
+    </div>
+
+
   </ng-template>
 
   <ng-template pTemplate="footer">
