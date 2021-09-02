@@ -7,8 +7,6 @@
       <ng-template pTemplate="left">
         <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success p-mr-2"
                 (click)="openNew()"></button>
-        <button pButton pRipple label="Eliminar" icon="pi pi-trash" class="p-button-danger"
-                (click)="deleteSelectedElements()" [disabled]="!selectedElements || !selectedElements.length"></button>
       </ng-template>
     </p-toolbar>
 
@@ -28,9 +26,6 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th *ngIf="multiselect===true" style="width: 3rem">
-            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-          </th>
           <ng-container *ngFor="let col of columnNameTable">
             <ng-container *ngIf="col === 'Logo' || col=== 'Avatar'">
               <th [style]="{width: 100/columnNameTable.length+'px'}">{{col}}</th>
@@ -47,9 +42,6 @@
       </ng-template>
       <ng-template pTemplate="body" let-element>
         <tr>
-          <td *ngIf="multiselect===true">
-            <p-tableCheckbox [value]="element"></p-tableCheckbox>
-          </td>
           <ng-container *ngIf="columnNameTable[0] === 'Logo'">
             <td>
               <p-avatar [image]="element.logoUrl" styleClass="p-mr-2" shape="circle"
@@ -116,7 +108,7 @@
 
     <ng-container *ngIf="title==='Jugadores'">
       <div class="p-field">
-        <label for="avatar">Url del logo*</label>
+        <label for="avatar">Url del Avatar*</label>
         <input type="text" pInputText id="avatar" [(ngModel)]="element.avatarUrl" required autofocus/>
         <small class="p-error" *ngIf="submitted && !element.avatarUrl">Url del avatar es requerido</small>
       </div>

@@ -1,7 +1,7 @@
 <div class="content">
   <app-menu-bar></app-menu-bar>
   <div *ngIf="teams.length>0; else espera">
-    <app-table [dataTable]="teams" [columnNameTable]="columnNames" [title]="title" [showActions]="true" [multiselect]="true" [teamService]="teamService" [leaguesService]="leagueService"></app-table>
+    <app-table [dataTable]="teams" [columnNameTable]="columnNames" [title]="title" [showActions]="true" [teamService]="teamService" [leaguesService]="leagueService"></app-table>
   </div>
   <ng-template #espera>Esperando datos...</ng-template>
 </div>

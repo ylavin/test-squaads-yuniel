@@ -9,6 +9,7 @@ import {PlayerService} from "../../services/playerService";
 import {Team} from "../../models/team";
 import {League} from "../../models/league";
 import {Player} from "../../models/player";
+import {async, waitForAsync} from "@angular/core/testing";
 
 @Component({
   selector: 'app-table',
@@ -67,19 +68,6 @@ export class TableComponent implements OnInit {
     this.modalTitle = 'Nuevo elemento';
   }
 
-  deleteSelectedElements() {
-    this.confirmationService.confirm({
-      message: '¿Estás seguro de deseas eliminar el elemento seleccionado?',
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.elements = this.elements.filter(val => !this.selectedElements.includes(val));
-        this.selectedElements = [];
-        this.messageService.add({severity: 'success', summary: '', detail: 'Elemento eliminado', life: 3000});
-      }
-    });
-  }
-
   editElement(element: any) {
     this.element = {...element};
     this.elementDialog = true;
@@ -100,7 +88,15 @@ export class TableComponent implements OnInit {
               this.getDataTableAfterSuccess();
               this.element = {};
             }
-          })
+          });
+        } else if (this.title === 'Jugadores') {
+          this.playerService.deleteById(element.id).subscribe(response => {
+            isSuccess = this.processResponse(response, 'delete');
+            if (isSuccess) {
+              this.getDataTableAfterSuccess();
+              this.element = {};
+            }
+          });
         }
       }
     });
@@ -123,6 +119,13 @@ export class TableComponent implements OnInit {
               this.getDataTableAfterSuccess();
             }
           });
+        } else if (this.title === 'Jugadores') {
+          this.playerService.update(this.element, this.element.id).subscribe(response => {
+            isSuccess = this.processResponse(response, 'update');
+            if (isSuccess) {
+              this.getDataTableAfterSuccess();
+            }
+          });
         }
       } else {
         if (this.title === 'Equipos') {
@@ -133,17 +136,16 @@ export class TableComponent implements OnInit {
               this.getDataTableAfterSuccess();
             }
           });
+        } else if (this.title === 'Jugadores') {
+          this.element.id = this.createId();
+          this.playerService.create(this.element).subscribe(response => {
+            isSuccess = this.processResponse(response, 'create');
+            if (isSuccess) {
+              this.getDataTableAfterSuccess();
+            }
+          });
         }
-        // this.element.id = this.createId();
-        // this.elements.push(this.element);
-        // this.messageService.add({
-        //   severity: 'success',
-        //   summary: '',
-        //   detail: 'Elemento creado satisfactoriamente',
-        //   life: 3000
-        // });
       }
-
       this.elements = [...this.elements];
       this.elementDialog = false;
       this.element = {};
