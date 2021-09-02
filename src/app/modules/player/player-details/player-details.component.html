@@ -1,1 +1,31 @@
-<p>player-details works!</p>
+<div class="content">
+  <app-menu-bar></app-menu-bar>
+
+  <button pButton pRipple label="Atrás" icon="pi pi-arrow-left" class="p-button-success p-mr-2 back-button"
+          (click)="goToBack()"></button>
+
+  <div *ngIf="playerDetail && team; else espera" class="card card-detail">
+    <h3 class="p-col p-d-flex p-ai-center p-jc-center">Detalles del Jugador</h3>
+    <p-splitter [style]="{'height': '100px'}" styleClass="p-mb-5">
+      <ng-template pTemplate>
+        <div class="p-col p-d-flex p-ai-center p-jc-center">
+          <p-avatar [image]="playerDetail.avatarUrl" styleClass="p-mr-2" size="xlarge" shape="circle"></p-avatar>
+        </div>
+      </ng-template>
+      <ng-template pTemplate>
+        <div class="p-col p-d-flex p-ai-center p-jc-center">
+          Nombre: {{playerDetail.name}}
+        </div>
+      </ng-template>
+      <ng-template pTemplate>
+        <div class="p-col p-d-flex p-ai-center p-jc-center">
+          Equipo: {{team.name}}
+          <p-avatar [image]="team.logoUrl" styleClass="p-mr-2" size="xlarge" shape="circle"></p-avatar>
+        </div>
+      </ng-template>
+    </p-splitter>
+  </div>
+  <ng-template #espera>Esperando datos...</ng-template>
+
+</div>
+<router-outlet></router-outlet>

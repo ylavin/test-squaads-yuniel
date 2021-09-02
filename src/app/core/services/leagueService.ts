@@ -15,4 +15,8 @@ export class LeagueService {
   getAllLeagues() {
     return this.http.get(this.url + this.endpoint);
   }
+
+  getLeagueById(id: any) {
+    return this.http.get(this.url + this.endpoint + '/' + id);
+  }
 }

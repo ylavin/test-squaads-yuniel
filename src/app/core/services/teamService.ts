@@ -17,6 +17,10 @@ export class TeamService {
     return this.http.get(this.url + this.endpoint);
   }
 
+  getTeamById(id: any) {
+    return this.http.get(this.url + this.endpoint + '/' + id);
+  }
+
   create(body: any) {
     let response = null;
     try {

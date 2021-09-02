@@ -9,7 +9,6 @@ import {HomeComponent} from './home/home.component';
 import {WelcomeComponent} from './welcome/welcome.component';
 import {MenubarModule} from 'primeng/menubar';
 import {LeagueListComponent} from './modules/league/league-list/league-list.component';
-import {LeagueFormComponent} from './modules/league/league-form/league-form.component';
 import {MenuBarComponent} from './core/components/menu-bar/menu-bar.component';
 import {TableComponent} from './core/components/table/table.component';
 import {TableModule} from 'primeng/table';
@@ -31,6 +30,13 @@ import {AvatarModule} from 'primeng/avatar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {DropdownModule} from 'primeng/dropdown';
+import { LeagueDetailsComponent } from './modules/league/league-details/league-details.component';
+import {LeaguePageRoutingModule} from "./modules/league/league-page-routing.module";
+import {SplitterModule} from 'primeng/splitter';
+import { PlayerDetailsComponent } from './modules/player/player-details/player-details.component';
+import {PlayerPageRoutingModule} from "./modules/player/player-page-routing.module";
+import { TeamDetailsComponent } from './modules/team/team-details/team-details.component';
+import {TeamPageRoutingModule} from "./modules/team/team-page-routing.module";
 
 @NgModule({
   declarations: [
@@ -38,16 +44,18 @@ import {DropdownModule} from 'primeng/dropdown';
     HomeComponent,
     WelcomeComponent,
     LeagueListComponent,
-    LeagueFormComponent,
     MenuBarComponent,
     TableComponent,
     PlayerListComponent,
-    TeamListComponent
+    TeamListComponent,
+    LeagueDetailsComponent,
+    PlayerDetailsComponent,
+    TeamDetailsComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot([
-      {path: 'welcome', component: WelcomeComponent},
+      {path: '', component: WelcomeComponent},
       {path: 'home', component: HomeComponent},
       {path: 'leagues', component: LeagueListComponent},
       {path: 'players', component: PlayerListComponent},
@@ -70,7 +78,11 @@ import {DropdownModule} from 'primeng/dropdown';
     AvatarModule,
     BrowserAnimationsModule,
     MultiSelectModule,
-    DropdownModule
+    DropdownModule,
+    LeaguePageRoutingModule,
+    SplitterModule,
+    PlayerPageRoutingModule,
+    TeamPageRoutingModule
   ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent],

@@ -1,13 +1,13 @@
-import { LeagueDetailsComponent } from './league-details/league-details.component';
+import { PlayerDetailsComponent } from './player-details/player-details.component';
 
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-      path: 'leagues/details/:id',
-      component: LeagueDetailsComponent,
-      data: { title: 'Detalles de Liga', isChild: true },
+      path: 'players/details/:id',
+      component: PlayerDetailsComponent,
+      data: { title: 'Detalles de Jugador', isChild: true },
   }
 ];
 
@@ -15,4 +15,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class LeaguePageRoutingModule {}
+export class PlayerPageRoutingModule {}

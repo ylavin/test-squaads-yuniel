@@ -9,7 +9,6 @@ import {PlayerService} from "../../services/playerService";
 import {Team} from "../../models/team";
 import {League} from "../../models/league";
 import {Player} from "../../models/player";
-import {async, waitForAsync} from "@angular/core/testing";
 
 @Component({
   selector: 'app-table',
@@ -26,7 +25,6 @@ export class TableComponent implements OnInit {
   modalTitle: string;
   teams: any[];
   leagues: any[];
-  // team: string;
 
   @Input() dataTable!: any[];
 
@@ -49,7 +47,6 @@ export class TableComponent implements OnInit {
     this.selectedElements = [];
     this.submitted = false;
     this.modalTitle = ''
-    // this.team = '';
     this.teams = [];
     this.leagues = [];
   }
@@ -183,17 +180,6 @@ export class TableComponent implements OnInit {
     return isValid
   }
 
-  findIndexById(id: string): number {
-    let index = -1;
-    for (let i = 0; i < this.elements.length; i++) {
-      if (this.elements[i].id === id) {
-        index = i;
-        break;
-      }
-    }
-    return index;
-  }
-
   createId(): string {
     let id = '';
     var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -204,13 +190,13 @@ export class TableComponent implements OnInit {
   }
 
   viewDetails(element: any) {
-    this.router.navigate(['/detail/' + element.id]);
-  }
-
-  getTeamById(id: any) {
-    this.playerService.getTeamById(id).subscribe(response => {
-      return response
-    });
+    if (this.title === 'Ligas') {
+      this.router.navigate(['leagues/details/' + element.id]);
+    } else if (this.title === 'Equipos' || this.title==='Equipos de la Liga') {
+      this.router.navigate(['teams/details/' + element.id]);
+    } else if (this.title === 'Jugadores') {
+      this.router.navigate(['players/details/' + element.id]);
+    }
   }
 
   getTeamForSelect() {

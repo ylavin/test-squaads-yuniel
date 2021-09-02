@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 body {
   font-family: var(--font-family);
+  background-color: #ededed;
 }
 
 .card {
@@ -8,7 +9,6 @@ body {
   padding: 2rem;
   box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
   border-radius: 4px;
-  margin-bottom: 2rem
 }
 
 h6, h5, h4, h3, h2, h1 {
@@ -26,6 +26,28 @@ h6, h5, h4, h3, h2, h1 {
 
 .p-button{
   margin-right:.5rem;
+}
+
+.p-ai-center {
+  align-items: center;
+}
+
+.p-jc-center {
+  justify-content: center;
+}
+
+.p-d-flex {
+  display: flex !important;
+}
+
+.p-jc-start {
+  justify-content:flex-start
+}
+
+.p-col {
+  flex-grow: 1;
+  flex-basis: 0;
+  padding: .5rem;
 }
 
 
