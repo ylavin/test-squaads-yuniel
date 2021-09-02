@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LeagueFormComponent } from './league-form.component';
+import { LeagueDetailsComponent } from './league-details.component';
 
-describe('LeagueFormComponent', () => {
-  let component: LeagueFormComponent;
-  let fixture: ComponentFixture<LeagueFormComponent>;
+describe('LeagueDetailsComponent', () => {
+  let component: LeagueDetailsComponent;
+  let fixture: ComponentFixture<LeagueDetailsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LeagueFormComponent ]
+      declarations: [ LeagueDetailsComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LeagueFormComponent);
+    fixture = TestBed.createComponent(LeagueDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
