@@ -7,6 +7,7 @@ import {LeagueService} from "../../services/leagueService";
 import {TeamService} from "../../services/teamService";
 import {PlayerService} from "../../services/playerService";
 import {Team} from "../../models/team";
+import {League} from "../../models/league";
 
 @Component({
   selector: 'app-table',
@@ -22,7 +23,8 @@ export class TableComponent implements OnInit {
   submitted: boolean;
   modalTitle: string;
   teams: any[];
-  team: string;
+  leagues: any[];
+  // team: string;
 
   @Input() dataTable!: any[];
 
@@ -34,6 +36,9 @@ export class TableComponent implements OnInit {
 
   @Input() playerService!: PlayerService;
   @Input() teamService!: TeamService;
+  @Input() leaguesService!: LeagueService;
+
+  @Input() multiselect!: boolean
 
   constructor(private primengConfig: PrimeNGConfig, private messageService: MessageService, private confirmationService: ConfirmationService, private router: Router) {
     this.elementDialog = false;
@@ -42,8 +47,9 @@ export class TableComponent implements OnInit {
     this.selectedElements = [];
     this.submitted = false;
     this.modalTitle = ''
-    this.team = '';
+    // this.team = '';
     this.teams = [];
+    this.leagues = [];
   }
 
   ngOnInit(): void {
@@ -52,6 +58,10 @@ export class TableComponent implements OnInit {
     this.teamService.getAllTeams().subscribe(respose => {
       this.teams = respose as Team[]
     })
+    this.leaguesService.getAllLeagues().subscribe(respose => {
+      this.leagues = respose as League[]
+    })
+
   }
 
   openNew() {
@@ -161,6 +171,14 @@ export class TableComponent implements OnInit {
   getTeamForSelect() {
     let options: any[] = [];
     this.teams.forEach(value => {
+      options.push({label: value.name, value: value.id})
+    });
+    return options;
+  }
+
+  getLeagueForSelect() {
+    let options: any[] = [];
+    this.leagues.forEach(value => {
       options.push({label: value.name, value: value.id})
     });
     return options;

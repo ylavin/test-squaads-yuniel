@@ -28,7 +28,7 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th style="width: 3rem">
+          <th *ngIf="multiselect===true" style="width: 3rem">
             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           </th>
           <ng-container *ngFor="let col of columnNameTable">
@@ -40,11 +40,6 @@
                 <p-sortIcon field="name"></p-sortIcon>
               </th>
             </ng-container>
-            <!--            <ng-container *ngIf="col==='Equipo'">-->
-            <!--              <th pSortableColumn="teamId" [style]="{width: 100/columnNameTable.length+'px'}">{{col}}-->
-            <!--                <p-sortIcon field="teamId"></p-sortIcon>-->
-            <!--              </th>-->
-            <!--            </ng-container>-->
           </ng-container>
 
           <th [style]="{width: 100/columnNameTable.length+'px'}">Acciones</th>
@@ -52,7 +47,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-element>
         <tr>
-          <td>
+          <td *ngIf="multiselect===true">
             <p-tableCheckbox [value]="element"></p-tableCheckbox>
           </td>
           <ng-container *ngIf="columnNameTable[0] === 'Logo'">
@@ -94,7 +89,8 @@
   </div>
 </div>
 
-<p-dialog [(visible)]="elementDialog" [style]="{width: '450px', 'height': '600px'}" header="{{modalTitle}}" [modal]="true"
+<p-dialog [(visible)]="elementDialog" [style]="{width: '450px', 'height': '600px'}" header="{{modalTitle}}"
+          [modal]="true"
           styleClass="p-fluid">
   <ng-template pTemplate="content">
     <div class="p-field">
@@ -103,23 +99,35 @@
       <small class="p-error" *ngIf="submitted && !element.name">Nombre es requerido</small>
     </div>
 
-    <div class="p-field" *ngIf="title==='Equipos'">
-      <label for="logo">Url del logo*</label>
-      <input type="text" pInputText id="logo" [(ngModel)]="element.logoUrl" required autofocus/>
-      <small class="p-error" *ngIf="submitted && !element.logoUrl">Url del logo es requerido</small>
-    </div>
+    <ng-container *ngIf="title==='Equipos'">
+      <div class="p-field">
+        <label for="logo">Url del logo*</label>
+        <input type="text" pInputText id="logo" [(ngModel)]="element.logoUrl" required autofocus/>
+        <small class="p-error" *ngIf="submitted && !element.logoUrl">Url del logo es requerido</small>
+      </div>
 
-    <div class="p-field" *ngIf="title==='Jugadores'">
-      <label for="avatar">Url del logo*</label>
-      <input type="text" pInputText id="avatar" [(ngModel)]="element.avatarUrl" required autofocus/>
-      <small class="p-error" *ngIf="submitted && !element.avatarUrl">Url del avatar es requerido</small>
-    </div>
+      <div class="p-field">
+        <label for="avatar">Liga*</label>
+        <p-dropdown [options]="getLeagueForSelect()" [(ngModel)]="element.leagueId" placeholder="Seleccione una Liga"
+                    [virtualScroll]="true" [itemSize]="31" [filter]="true"></p-dropdown>
+        <small class="p-error" *ngIf="submitted && !element.leagueId">La Liga es requerido</small>
+      </div>
+    </ng-container>
 
-    <div class="p-field" *ngIf="title==='Jugadores'">
-      <label for="avatar">Equipo*</label>
-      <p-dropdown [options]="getTeamForSelect()" [(ngModel)]="team" placeholder="Seleccione un equipo" [virtualScroll]="true" [itemSize]="31" [filter]="false"></p-dropdown>
-      <small class="p-error" *ngIf="submitted && !element.teamId">El equipo es requerido</small>
-    </div>
+    <ng-container *ngIf="title==='Jugadores'">
+      <div class="p-field">
+        <label for="avatar">Url del logo*</label>
+        <input type="text" pInputText id="avatar" [(ngModel)]="element.avatarUrl" required autofocus/>
+        <small class="p-error" *ngIf="submitted && !element.avatarUrl">Url del avatar es requerido</small>
+      </div>
+
+      <div class="p-field">
+        <label for="avatar">Equipo*</label>
+        <p-dropdown [options]="getTeamForSelect()" [(ngModel)]="element.teamId" placeholder="Seleccione un equipo"
+                    [virtualScroll]="true" [itemSize]="31" [filter]="true"></p-dropdown>
+        <small class="p-error" *ngIf="submitted && !element.teamId">El equipo es requerido</small>
+      </div>
+    </ng-container>
 
 
   </ng-template>
